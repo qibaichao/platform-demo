@@ -5,13 +5,16 @@
 DROP TABLE IF EXISTS t_user_test;
 
 CREATE TABLE t_user_test (
-  user_id NUMBER(11) NOT NULL  primary key,
-  user_name varchar(255) NOT NULL,
-  email varchar(255) DEFAULT NULL,
-  phone varchar(16) DEFAULT NULL,
-  address varchar(255) DEFAULT NULL,
-  age NUMBER(3) DEFAULT NULL
-) 
+   `user_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(16) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `age` int(3) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+)
+
+
 
 -- ----------------------------
 -- Records of t_user_test
