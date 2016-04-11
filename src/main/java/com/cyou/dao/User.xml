@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cyou.dao.UserDao">
+
+	<resultMap id="resultMap" type="UserPo" autoMapping="true">
+		<id column="user_id" property="userId" />
+		<result column="user_name" property="userName" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="address" property="address" />
+		<result column="age" property="age" />
+	</resultMap>
+
+	<sql id="columnList">
+		user_id,user_name,email,phone,address,age
+	</sql>
+	<select id="selectUserById" resultMap="resultMap">
+		select
+		<include refid="columnList" />
+		from t_user_test
+		where user_id = #{userId}
+	</select>
+
+	<select id="selectCount" resultType="int">
+		SELECT
+		COUNT(USER_ID)
+		FROM
+		T_USER_TEST
+	</select>
+
+	<select id="selectUserList" resultMap="resultMap">
+		select
+		<include refid="columnList" />
+		from t_user_test
+	</select>
+
+
+	<insert id="insertUser">
+		insert into
+		t_user_test(user_id,user_name,email,phone,address,age)
+		values(
+		#{userId},
+		#{userName},
+		#{email}, #{phone} ,#{address}, #{age}
+		)
+	</insert>
+	<!-- 删除 -->
+	<delete id="deleteUser">
+		delete from
+		t_user_test
+		WHERE user_Id in
+		<foreach item="idItem" collection="userIds" open="("
+			separator="," close=")">
+			#{idItem}
+		</foreach>
+	</delete>
+
+	<!-- 修改 -->
+	<update id="updateUser" parameterType="UserPo">
+		UPDATE
+		t_user_test
+		<set>
+			<if test="userName != null and userName != '' ">
+				user_Name=#{userName},
+			</if>
+			<if test="email != null and email != '' ">
+				email=#{email},
+			</if>
+			<if test="phone != null and phone != '' ">
+				phone=#{phone},
+			</if>
+			<if test="address != null and address != '' ">
+				address=#{address},
+			</if>
+			<if test="age != null and age != '' ">
+				age=#{age}
+			</if>
+		</set>
+		WHERE user_Id = #{userId}
+	</update>
+
+</mapper>
